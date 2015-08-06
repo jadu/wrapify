@@ -1,0 +1,47 @@
+{
+  "version": "1.0.0",
+  "name": "wrapify",
+  "description": "Browserify transform to wrap modules or inject variables",
+  "keywords": [
+    "inject",
+    "wrap",
+    "global"
+  ],
+  "homepage": "https://github.com/jadu/wrapify",
+  "author": "Dan Phillimore <daniel.phillimore@jadu.co.uk> (https://www.jadu.net/)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jadu/wrapify"
+  },
+  "bugs": {
+    "email": "daniel.phillimore@jadu.co.uk",
+    "url": "https://github.com/jadu/wrapify/issues"
+  },
+  "main": "index",
+  "scripts": {
+    "jshint": "jshint .",
+    "mocha": "mocha --recursive test/",
+    "test": "npm run jshint && npm run mocha"
+  },
+  "dependencies": {
+    "browserify-transform-tools": "^1.4.2",
+    "lodash": "^3.10.1",
+    "require-resolve": "0.0.2"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "jshint": "^2.8.0",
+    "mocha": "^2.2.5",
+    "nowdoc": "^1.0.0",
+    "sinon-chai": "^2.7.0"
+  },
+  "engines": {
+    "node": ">=0.6"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jadu/wrapify/raw/master/MIT-LICENSE.txt"
+    }
+  ]
+}
