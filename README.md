@@ -40,5 +40,5 @@ will transform into
  ...
  */
  ...
-}(require("/Library/WebServer/Documents/localhost/jadu/quantum/jadu-support-widget/src/wrapper/windowProxy.js").proxyWindow));
+}(require("/jadu-support-widget/src/wrapper/windowProxy.js").proxyWindow));
 ```
