@@ -38,5 +38,7 @@ will transform into
  * jQuery JavaScript Library v1.11.3
  * http://jquery.com/
  ...
+ */
+ ...
 }(require("/Library/WebServer/Documents/localhost/jadu/quantum/jadu-support-widget/src/wrapper/windowProxy.js").proxyWindow));
 ```
