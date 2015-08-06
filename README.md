@@ -20,14 +20,14 @@ Add to `package.json` -
     ]
   },
   "wrapify": {
-      "inject": {
-        "jquery/dist/jquery": {
-          "./src/wrapper/windowProxy": {
-            "window": ".proxyWindow"
-          }
+    "inject": {
+      "jquery/dist/jquery": {
+        "./src/wrapper/windowProxy": {
+          "window": ".proxyWindow"
         }
       }
     }
+  }
 }
 ```
 
