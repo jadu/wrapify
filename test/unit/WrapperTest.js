@@ -48,7 +48,7 @@ describe('Wrapper', function () {
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
 (function (myVar) {
 var theCode = "is here";
-}(require("/my/file.js")));
+}.call(this, require("/my/file.js")));
 EOS
 */;})); //jshint ignore:line
     });
@@ -70,7 +70,7 @@ EOS
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
 (function (window) {
 var theCode = "is here";
-}(require("/my/file.js").proxyWindow));
+}.call(this, require("/my/file.js").proxyWindow));
 EOS
 */;})); //jshint ignore:line
     });
@@ -93,7 +93,7 @@ EOS
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
 (function (window, orange) {
 var theCode = "is here";
-}(require("/my/file.js").proxyWindow, require("/my/file.js").orangeColour));
+}.call(this, require("/my/file.js").proxyWindow, require("/my/file.js").orangeColour));
 EOS
 */;})); //jshint ignore:line
     });

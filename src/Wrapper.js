@@ -68,7 +68,7 @@ Wrapper.prototype.wrap = function (config, content, file) {
         values.push(assignments[name]);
     });
 
-    content = '(function (' + names.join(', ') + ') {\n' + content + '\n}(' + values.join(', ') + '));';
+    content = '(function (' + names.join(', ') + ') {\n' + content + '\n}.call(this, ' + values.join(', ') + '));';
 
     return content;
 };
