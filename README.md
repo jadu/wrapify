@@ -14,6 +14,8 @@ npm install --save-dev wrapify
 Add to `package.json` -
 ```json
 {
+  "version": "1.0.0",
+  "name": "my-pkg",
   "browserify": {
     "transform": [
       "wrapify"
