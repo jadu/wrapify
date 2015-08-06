@@ -40,5 +40,5 @@ will transform into
  ...
  */
  ...
-}(require("/jadu-support-widget/src/wrapper/windowProxy.js").proxyWindow));
+}(require("/my-lib/src/wrapper/windowProxy.js").proxyWindow));
 ```
