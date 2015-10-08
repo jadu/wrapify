@@ -10,15 +10,13 @@
 'use strict';
 
 var _ = require('lodash'),
-    hasOwn = {}.hasOwnProperty,
-    path = require('path'),
-    mainDirname = path.resolve(require.main.filename, '../../..');
+    hasOwn = {}.hasOwnProperty;
 
 function Wrapper(requireResolve) {
     this.requireResolve = requireResolve;
 }
 
-Wrapper.prototype.wrap = function (config, content, file) {
+Wrapper.prototype.wrap = function (config, content, file, configDir) {
     var injections = {},
         assignments = {},
         names,
@@ -27,7 +25,7 @@ Wrapper.prototype.wrap = function (config, content, file) {
         values = [];
 
     _.forOwn(config.inject, function (theseInjections, pathToMatch) {
-        var resolvedPath = requireResolve(pathToMatch, mainDirname);
+        var resolvedPath = requireResolve(pathToMatch, configDir);
 
         if (!resolvedPath) {
             throw new Error('Failed to resolve injection path "' + pathToMatch + '"');
@@ -46,7 +44,7 @@ Wrapper.prototype.wrap = function (config, content, file) {
         var resolvedSource,
             sourceRequire;
 
-        resolvedSource = requireResolve(source, mainDirname);
+        resolvedSource = requireResolve(source, configDir);
 
         if (!resolvedSource) {
             throw new Error('Failed to resolve source path "' + source + '"');

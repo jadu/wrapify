@@ -20,7 +20,7 @@
   "main": "index",
   "scripts": {
     "jshint": "jshint .",
-    "mocha": "mocha --recursive test/",
+    "mocha": "mocha -r test/harness --recursive test/",
     "test": "npm run jshint && npm run mocha"
   },
   "dependencies": {
@@ -34,7 +34,7 @@
     "mocha": "^2.2.5",
     "nowdoc": "^1.0.0",
     "sinon": "~1.15",
-    "sinon-chai": "^2.7.0"
+    "sinon-chai": "^2.8.0"
   },
   "engines": {
     "node": ">=0.6"

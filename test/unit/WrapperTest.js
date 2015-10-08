@@ -17,13 +17,14 @@ var expect = require('chai').expect,
 describe('Wrapper', function () {
     beforeEach(function () {
         this.config = {};
+        this.configDir = '';
         this.content = '';
         this.file = '/path/to/my/file.js';
         this.requireResolve = sinon.stub();
         this.wrapper = new Wrapper(this.requireResolve);
 
         this.callWrap = function () {
-            return this.wrapper.wrap(this.config, this.content, this.file);
+            return this.wrapper.wrap(this.config, this.content, this.file, this.configDir);
         }.bind(this);
     });
 
@@ -31,6 +32,26 @@ describe('Wrapper', function () {
         this.content = 'var my = "content";';
 
         expect(this.callWrap()).to.equal('var my = "content";');
+    });
+
+    it('should resolve the injection relative to the config dir', function () {
+        this.config = {
+            inject: {
+                '/my/file.js': {
+                    './src/proxier': 'myVar'
+                }
+            }
+        };
+        this.content = 'var my = "content";';
+        this.requireResolve.returns({src: this.file});
+        this.configDir = '/path/to/folder/containing/packagedotjson';
+
+        this.callWrap();
+
+        expect(this.requireResolve).to.have.been.calledWith(
+            '/my/file.js',
+            '/path/to/folder/containing/packagedotjson'
+        );
     });
 
     it('should transform a file that has one injection specified with no expression suffix', function () {

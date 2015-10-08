@@ -21,12 +21,13 @@ module.exports = transformTools.makeStringTransform(
     },
     function (content, transformOptions, done) {
         var config = transformOptions.config,
+            configDir = transformOptions.configData.configDir,
             file = transformOptions.file;
 
         if (!config) {
             return done(new Error('Could not find wrapify configuration.'));
         }
 
-        done(null, wrapper.wrap(config, content, file));
+        done(null, wrapper.wrap(config, content, file, configDir));
     }
 );
