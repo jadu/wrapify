@@ -20,8 +20,8 @@ describe('Wrapper', function () {
         this.configDir = '';
         this.content = '';
         this.file = '/path/to/my/file.js';
-        this.requireResolve = sinon.stub();
-        this.wrapper = new Wrapper(this.requireResolve);
+        this.resolve = sinon.stub();
+        this.wrapper = new Wrapper({sync: this.resolve});
 
         this.callWrap = function () {
             return this.wrapper.wrap(this.config, this.content, this.file, this.configDir);
@@ -43,12 +43,12 @@ describe('Wrapper', function () {
             }
         };
         this.content = 'var my = "content";';
-        this.requireResolve.returns({src: this.file});
+        this.resolve.returns({src: this.file});
         this.configDir = '/path/to/folder/containing/packagedotjson';
 
         this.callWrap();
 
-        expect(this.requireResolve).to.have.been.calledWith(
+        expect(this.resolve).to.have.been.calledWith(
             '/my/file.js',
             {basedir: '/path/to/folder/containing/packagedotjson'}
         );
@@ -63,7 +63,7 @@ describe('Wrapper', function () {
             }
         };
         this.file = '/my/file.js';
-        this.requireResolve.returns({src: this.file});
+        this.resolve.returns({src: this.file});
         this.content = 'var theCode = "is here";';
 
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
@@ -85,7 +85,7 @@ EOS
             }
         };
         this.file = '/my/file.js';
-        this.requireResolve.returns({src: this.file});
+        this.resolve.returns({src: this.file});
         this.content = 'var theCode = "is here";';
 
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
@@ -108,7 +108,7 @@ EOS
             }
         };
         this.file = '/my/file.js';
-        this.requireResolve.returns({src: this.file});
+        this.resolve.returns({src: this.file});
         this.content = 'var theCode = "is here";';
 
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
@@ -131,7 +131,7 @@ EOS
             }
         };
         this.file = '/my/file.js';
-        this.requireResolve.returns({src: this.file});
+        this.resolve.returns({src: this.file});
         this.content = 'var theCode = "is here";';
 
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
@@ -158,8 +158,8 @@ EOS
             }
         };
         this.file = '/my/file.js';
-        this.requireResolve.withArgs('/my/file.js').returns({src: this.file});
-        this.requireResolve.returns(null);
+        this.resolve.withArgs('/my/file.js').returns({src: this.file});
+        this.resolve.returns(null);
         this.content = 'var theCode = "is here";';
 
         expect(function () {
@@ -178,8 +178,8 @@ EOS
             }
         };
         this.file = '/my/file.js';
-        this.requireResolve.withArgs('/my/file.js').returns({src: this.file});
-        this.requireResolve.returns(null);
+        this.resolve.withArgs('/my/file.js').returns({src: this.file});
+        this.resolve.returns(null);
         this.content = 'var theCode = "is here";';
 
         expect(function () {

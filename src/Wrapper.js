@@ -25,7 +25,7 @@ Wrapper.prototype.wrap = function (config, content, file, configDir) {
         values = [];
 
     _.forOwn(config.inject, function (theseInjections, pathToMatch) {
-        var resolvedPath = resolve(pathToMatch, {basedir: configDir});
+        var resolvedPath = resolve.sync(pathToMatch, {basedir: configDir});
 
         if (!resolvedPath) {
             throw new Error('Failed to resolve injection path "' + pathToMatch + '"');
@@ -44,7 +44,7 @@ Wrapper.prototype.wrap = function (config, content, file, configDir) {
         var resolvedSource,
             sourceRequire;
 
-        resolvedSource = resolve(source, {basedir: configDir});
+        resolvedSource = resolve.sync(source, {basedir: configDir});
 
         if (!resolvedSource) {
             throw new Error('Failed to resolve source path "' + source + '"');
