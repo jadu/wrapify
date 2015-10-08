@@ -31,7 +31,7 @@ Wrapper.prototype.wrap = function (config, content, file, configDir) {
             throw new Error('Failed to resolve injection path "' + pathToMatch + '"');
         }
 
-        if (file === resolvedPath.src) {
+        if (file === resolvedPath) {
             _.extend(injections, theseInjections);
         }
     });
@@ -50,7 +50,7 @@ Wrapper.prototype.wrap = function (config, content, file, configDir) {
             throw new Error('Failed to resolve source path "' + source + '"');
         }
 
-        sourceRequire = 'require(' + JSON.stringify(resolvedSource.src) + ')';
+        sourceRequire = 'require(' + JSON.stringify(resolvedSource) + ')';
 
         if (_.isPlainObject(map)) {
             _.forOwn(map, function (expression, variable) {

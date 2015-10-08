@@ -43,7 +43,7 @@ describe('Wrapper', function () {
             }
         };
         this.content = 'var my = "content";';
-        this.resolve.returns({src: this.file});
+        this.resolve.returns(this.file);
         this.configDir = '/path/to/folder/containing/packagedotjson';
 
         this.callWrap();
@@ -63,7 +63,7 @@ describe('Wrapper', function () {
             }
         };
         this.file = '/my/file.js';
-        this.resolve.returns({src: this.file});
+        this.resolve.returns(this.file);
         this.content = 'var theCode = "is here";';
 
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
@@ -85,7 +85,7 @@ EOS
             }
         };
         this.file = '/my/file.js';
-        this.resolve.returns({src: this.file});
+        this.resolve.returns(this.file);
         this.content = 'var theCode = "is here";';
 
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
@@ -108,7 +108,7 @@ EOS
             }
         };
         this.file = '/my/file.js';
-        this.resolve.returns({src: this.file});
+        this.resolve.returns(this.file);
         this.content = 'var theCode = "is here";';
 
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
@@ -131,7 +131,7 @@ EOS
             }
         };
         this.file = '/my/file.js';
-        this.resolve.returns({src: this.file});
+        this.resolve.returns(this.file);
         this.content = 'var theCode = "is here";';
 
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
@@ -158,7 +158,7 @@ EOS
             }
         };
         this.file = '/my/file.js';
-        this.resolve.withArgs('/my/file.js').returns({src: this.file});
+        this.resolve.withArgs('/my/file.js').returns(this.file);
         this.resolve.returns(null);
         this.content = 'var theCode = "is here";';
 
@@ -178,7 +178,7 @@ EOS
             }
         };
         this.file = '/my/file.js';
-        this.resolve.withArgs('/my/file.js').returns({src: this.file});
+        this.resolve.withArgs('/my/file.js').returns(this.file);
         this.resolve.returns(null);
         this.content = 'var theCode = "is here";';
 
