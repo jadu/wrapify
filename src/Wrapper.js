@@ -12,20 +12,20 @@
 var _ = require('lodash'),
     hasOwn = {}.hasOwnProperty;
 
-function Wrapper(requireResolve) {
-    this.requireResolve = requireResolve;
+function Wrapper(resolve) {
+    this.resolve = resolve;
 }
 
 Wrapper.prototype.wrap = function (config, content, file, configDir) {
     var injections = {},
         assignments = {},
         names,
-        requireResolve = this.requireResolve,
+        resolve = this.resolve,
         thisValue = 'this',
         values = [];
 
     _.forOwn(config.inject, function (theseInjections, pathToMatch) {
-        var resolvedPath = requireResolve(pathToMatch, configDir);
+        var resolvedPath = resolve(pathToMatch, {basedir: configDir});
 
         if (!resolvedPath) {
             throw new Error('Failed to resolve injection path "' + pathToMatch + '"');
@@ -44,7 +44,7 @@ Wrapper.prototype.wrap = function (config, content, file, configDir) {
         var resolvedSource,
             sourceRequire;
 
-        resolvedSource = requireResolve(source, configDir);
+        resolvedSource = resolve(source, {basedir: configDir});
 
         if (!resolvedSource) {
             throw new Error('Failed to resolve source path "' + source + '"');

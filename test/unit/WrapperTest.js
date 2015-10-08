@@ -50,7 +50,7 @@ describe('Wrapper', function () {
 
         expect(this.requireResolve).to.have.been.calledWith(
             '/my/file.js',
-            '/path/to/folder/containing/packagedotjson'
+            {basedir: '/path/to/folder/containing/packagedotjson'}
         );
     });
 

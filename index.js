@@ -10,9 +10,9 @@
 'use strict';
 
 var Wrapper = require('./src/Wrapper'),
-    requireResolve = require('require-resolve'),
+    resolve = require('resolve'),
     transformTools = require('browserify-transform-tools'),
-    wrapper = new Wrapper(requireResolve);
+    wrapper = new Wrapper(resolve);
 
 module.exports = transformTools.makeStringTransform(
     'wrapify',
