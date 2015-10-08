@@ -10,6 +10,7 @@
 'use strict';
 
 var _ = require('lodash'),
+    hasOwn = {}.hasOwnProperty,
     path = require('path'),
     mainDirname = path.resolve(require.main.filename, '../../..');
 
@@ -22,6 +23,7 @@ Wrapper.prototype.wrap = function (config, content, file) {
         assignments = {},
         names,
         requireResolve = this.requireResolve,
+        thisValue = 'this',
         values = [];
 
     _.forOwn(config.inject, function (theseInjections, pathToMatch) {
@@ -63,12 +65,18 @@ Wrapper.prototype.wrap = function (config, content, file) {
         }
     });
 
+    // Handle 'this' as a special case for setting the context object
+    if (hasOwn.call(assignments, 'this')) {
+        thisValue = assignments.this;
+        delete assignments.this;
+    }
+
     names = Object.keys(assignments);
     _.each(names, function (name) {
         values.push(assignments[name]);
     });
 
-    content = '(function (' + names.join(', ') + ') {\n' + content + '\n}.call(this, ' + values.join(', ') + '));';
+    content = '(function (' + names.join(', ') + ') {\n' + content + '\n}.call(' + thisValue + ', ' + values.join(', ') + '));';
 
     return content;
 };

@@ -98,6 +98,29 @@ EOS
 */;})); //jshint ignore:line
     });
 
+    it('should transform a file that has an injection for "this" with an expression suffix', function () {
+        this.config = {
+            inject: {
+                '/my/file.js': {
+                    './src/proxier': {
+                        'this': '.proxyWindow',
+                        'orange': '.orangeColour'
+                    }
+                }
+            }
+        };
+        this.file = '/my/file.js';
+        this.requireResolve.returns({src: this.file});
+        this.content = 'var theCode = "is here";';
+
+        expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
+(function (orange) {
+var theCode = "is here";
+}.call(require("/my/file.js").proxyWindow, require("/my/file.js").orangeColour));
+EOS
+*/;})); //jshint ignore:line
+    });
+
     it('should throw an error for injection paths that cannot be resolved', function () {
         this.config = {
             inject: {
