@@ -43,7 +43,8 @@ describe('Wrapper', function () {
             }
         };
         this.content = 'var my = "content";';
-        this.resolve.returns(this.file);
+        this.resolve.withArgs('/my/file.js').returns(this.file);
+        this.resolve.withArgs('./src/proxier').returns('/resolved/proxier.js');
         this.configDir = '/path/to/folder/containing/packagedotjson';
 
         this.callWrap();
@@ -63,13 +64,14 @@ describe('Wrapper', function () {
             }
         };
         this.file = '/my/file.js';
-        this.resolve.returns(this.file);
+        this.resolve.withArgs('/my/file.js').returns(this.file);
+        this.resolve.withArgs('./src/proxier').returns('/resolved/proxier.js');
         this.content = 'var theCode = "is here";';
 
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
 (function (myVar) {
 var theCode = "is here";
-}.call(this, require("/my/file.js")));
+}.call(this, require("/resolved/proxier.js")));
 EOS
 */;})); //jshint ignore:line
     });
@@ -85,13 +87,14 @@ EOS
             }
         };
         this.file = '/my/file.js';
-        this.resolve.returns(this.file);
+        this.resolve.withArgs('/my/file.js').returns(this.file);
+        this.resolve.withArgs('./src/proxier').returns('/resolved/proxier.js');
         this.content = 'var theCode = "is here";';
 
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
 (function (window) {
 var theCode = "is here";
-}.call(this, require("/my/file.js").proxyWindow));
+}.call(this, require("/resolved/proxier.js").proxyWindow));
 EOS
 */;})); //jshint ignore:line
     });
@@ -108,13 +111,14 @@ EOS
             }
         };
         this.file = '/my/file.js';
-        this.resolve.returns(this.file);
+        this.resolve.withArgs('/my/file.js').returns(this.file);
+        this.resolve.withArgs('./src/proxier').returns('/resolved/proxier.js');
         this.content = 'var theCode = "is here";';
 
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
 (function (window, orange) {
 var theCode = "is here";
-}.call(this, require("/my/file.js").proxyWindow, require("/my/file.js").orangeColour));
+}.call(this, require("/resolved/proxier.js").proxyWindow, require("/resolved/proxier.js").orangeColour));
 EOS
 */;})); //jshint ignore:line
     });
@@ -131,13 +135,14 @@ EOS
             }
         };
         this.file = '/my/file.js';
-        this.resolve.returns(this.file);
+        this.resolve.withArgs('/my/file.js').returns(this.file);
+        this.resolve.withArgs('./src/proxier').returns('/resolved/proxier.js');
         this.content = 'var theCode = "is here";';
 
         expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
 (function (orange) {
 var theCode = "is here";
-}.call(require("/my/file.js").proxyWindow, require("/my/file.js").orangeColour));
+}.call(require("/resolved/proxier.js").proxyWindow, require("/resolved/proxier.js").orangeColour));
 EOS
 */;})); //jshint ignore:line
     });
