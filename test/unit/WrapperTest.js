@@ -140,6 +140,26 @@ EOS
 */;})); //jshint ignore:line
     });
 
+    it('should transform a file that has a wrapper module', function () {
+        this.config = {
+            wrap: {
+                '/my/file.js': {
+                    wrapper: './src/wrapper',
+                    args: ['red', 'green']
+                }
+            }
+        };
+        this.resolve.withArgs('./src/wrapper').returns('/resolved/wrapper.js');
+        this.content = 'var theCode = "is here";';
+
+        expect(this.callWrap()).to.equal(nowdoc(function () {/*<<<EOS
+require("/resolved/wrapper.js")(module, exports, function (module, exports, red, green) {
+var theCode = "is here";
+});
+EOS
+*/;})); //jshint ignore:line
+    });
+
     it('should throw an error for injection paths that cannot be resolved', function () {
         this.config = {
             inject: {

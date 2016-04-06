@@ -22,7 +22,41 @@ Wrapper.prototype.wrap = function (config, content, file, configDir) {
         names,
         resolve = this.resolve,
         thisValue = 'this',
-        values = [];
+        values = [],
+        wrapDatas = [];
+
+    _.forOwn(config.wrap, function (theseWrapDatas, pathToMatch) {
+        var resolvedPath = resolve.sync(pathToMatch, {basedir: configDir});
+
+        if (!resolvedPath) {
+            throw new Error('Failed to resolve wrapper path "' + pathToMatch + '"');
+        }
+
+        if (file === resolvedPath) {
+            wrapDatas.push(theseWrapDatas);
+        }
+    });
+
+    if (wrapDatas.length > 0) {
+        _.each(wrapDatas, function (wrapData) {
+            var argNames = ['module', 'exports'].concat(),
+                resolvedWrapperPath = resolve.sync(wrapData.wrapper, {basedir: configDir});
+
+            if (wrapData.args) {
+                [].push.apply(argNames, wrapData.args);
+            }
+
+            content = 'require(' +
+                JSON.stringify(resolvedWrapperPath) +
+                ')(module, exports, function (' +
+                argNames.join(', ') +
+                ') {\n' +
+                content + '\n' +
+                '});';
+        });
+
+        return content;
+    }
 
     _.forOwn(config.inject, function (theseInjections, pathToMatch) {
         var resolvedPath = resolve.sync(pathToMatch, {basedir: configDir});
