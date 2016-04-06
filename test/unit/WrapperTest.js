@@ -19,12 +19,14 @@ describe('Wrapper', function () {
         this.config = {};
         this.configDir = '';
         this.content = '';
-        this.file = '/path/to/my/file.js';
         this.resolve = sinon.stub();
         this.wrapper = new Wrapper({sync: this.resolve});
 
-        this.callWrap = function () {
-            return this.wrapper.wrap(this.config, this.content, this.file, this.configDir);
+        this.resolve.withArgs('/my/file.js').returns('/resolved/my/file.js');
+        this.resolve.withArgs('/resolved/my/file.js').returns('/resolved/my/file.js');
+
+        this.callWrap = function (file) {
+            return this.wrapper.wrap(this.config, this.content, file || '/resolved/my/file.js', this.configDir);
         }.bind(this);
     });
 
@@ -43,7 +45,6 @@ describe('Wrapper', function () {
             }
         };
         this.content = 'var my = "content";';
-        this.resolve.withArgs('/my/file.js').returns(this.file);
         this.resolve.withArgs('./src/proxier').returns('/resolved/proxier.js');
         this.configDir = '/path/to/folder/containing/packagedotjson';
 
@@ -63,8 +64,6 @@ describe('Wrapper', function () {
                 }
             }
         };
-        this.file = '/my/file.js';
-        this.resolve.withArgs('/my/file.js').returns(this.file);
         this.resolve.withArgs('./src/proxier').returns('/resolved/proxier.js');
         this.content = 'var theCode = "is here";';
 
@@ -86,8 +85,6 @@ EOS
                 }
             }
         };
-        this.file = '/my/file.js';
-        this.resolve.withArgs('/my/file.js').returns(this.file);
         this.resolve.withArgs('./src/proxier').returns('/resolved/proxier.js');
         this.content = 'var theCode = "is here";';
 
@@ -110,8 +107,6 @@ EOS
                 }
             }
         };
-        this.file = '/my/file.js';
-        this.resolve.withArgs('/my/file.js').returns(this.file);
         this.resolve.withArgs('./src/proxier').returns('/resolved/proxier.js');
         this.content = 'var theCode = "is here";';
 
@@ -134,8 +129,6 @@ EOS
                 }
             }
         };
-        this.file = '/my/file.js';
-        this.resolve.withArgs('/my/file.js').returns(this.file);
         this.resolve.withArgs('./src/proxier').returns('/resolved/proxier.js');
         this.content = 'var theCode = "is here";';
 
@@ -162,8 +155,6 @@ EOS
                 }
             }
         };
-        this.file = '/my/file.js';
-        this.resolve.withArgs('/my/file.js').returns(this.file);
         this.resolve.returns(null);
         this.content = 'var theCode = "is here";';
 
@@ -182,8 +173,6 @@ EOS
                 }
             }
         };
-        this.file = '/my/file.js';
-        this.resolve.withArgs('/my/file.js').returns(this.file);
         this.resolve.returns(null);
         this.content = 'var theCode = "is here";';
 
