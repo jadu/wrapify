@@ -39,7 +39,7 @@ Wrapper.prototype.wrap = function (config, content, file, configDir) {
 
     if (wrapDatas.length > 0) {
         _.each(wrapDatas, function (wrapData) {
-            var argNames = ['module', 'exports'].concat(),
+            var argNames = ['module', 'exports'],
                 resolvedWrapperPath = resolve.sync(wrapData.wrapper, {basedir: configDir});
 
             if (wrapData.args) {
